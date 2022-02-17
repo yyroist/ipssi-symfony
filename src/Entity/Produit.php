@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
@@ -18,22 +16,17 @@ class Produit
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $description;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private $prix;
 
     #[ORM\Column(type: 'integer')]
     private $stock;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $photo;
-
-    #[ORM\OneToMany(mappedBy: 'Produit', targetEntity: ContenuPanier::class)]
-    private $Produit;
-
-    public function __construct()
-    {
-        $this->Produit = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -52,12 +45,24 @@ class Produit
         return $this;
     }
 
-    public function getPrix(): ?int
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPrix(): ?string
     {
         return $this->prix;
     }
 
-    public function setPrix(int $prix): self
+    public function setPrix(string $prix): self
     {
         $this->prix = $prix;
 
@@ -81,39 +86,9 @@ class Produit
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ContenuPanier>
-     */
-    public function getProduit(): Collection
-    {
-        return $this->Produit;
-    }
-
-    public function addProduit(ContenuPanier $produit): self
-    {
-        if (!$this->Produit->contains($produit)) {
-            $this->Produit[] = $produit;
-            $produit->setProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(ContenuPanier $produit): self
-    {
-        if ($this->Produit->removeElement($produit)) {
-            // set the owning side to null (unless already changed)
-            if ($produit->getProduit() === $this) {
-                $produit->setProduit(null);
-            }
-        }
 
         return $this;
     }

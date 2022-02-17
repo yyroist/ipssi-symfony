@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,13 +24,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Panier::class)]
-    private $User;
-
-    public function __construct()
-    {
-        $this->User = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'string', length: 255)]
+    private $nom;
 
     public function getId(): ?int
     {
@@ -104,32 +97,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection<int, Panier>
-     */
-    public function getUser(): Collection
+    public function getNom(): ?string
     {
-        return $this->User;
+        return $this->nom;
     }
 
-    public function addUser(Panier $user): self
+    public function setNom(string $nom): self
     {
-        if (!$this->User->contains($user)) {
-            $this->User[] = $user;
-            $user->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(Panier $user): self
-    {
-        if ($this->User->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getUser() === $this) {
-                $user->setUser(null);
-            }
-        }
+        $this->nom = $nom;
 
         return $this;
     }
