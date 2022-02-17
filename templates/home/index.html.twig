@@ -3,11 +3,24 @@
 {% block title %}{{ 'nav.home'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'products.list'|trans }}</h1>
+    <div class="row">
+        <div class="col-4">
+            <span class="fw-bolder">{{ 'products.list'|trans }}</span>
+        </div>
+        <div class="col d-flex gap-2 justify-content-end">
+            {# Actions administrateur #}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('produit_new') }}" class="btn btn-sm btn-warning text-white">
+                    {{ 'product.new'|trans }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
 
     <div class="row mt-3">
         <div class="col-12">
             <div class="row">
+                {# Affichage de la liste des produits #}
                 {% for p in products %}
                     <div class="col">
                         <div class="card shadow rounded p-2">
