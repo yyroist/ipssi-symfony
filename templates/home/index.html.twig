@@ -3,19 +3,16 @@
 {% block title %}{{ 'nav.home'|trans }}{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-4">
-            <span class="fw-bolder">{{ 'products.list'|trans }}</span>
-        </div>
-        <div class="col d-flex gap-2 justify-content-end">
-            {# Actions administrateur #}
-            {% if is_granted('ROLE_ADMIN') %}
+    {# Actions administrateur #}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="row">
+            <div class="col-12 d-flex gap-2 justify-content-end">
                 <a href="{{ path('produit_new') }}" class="btn btn-sm btn-warning text-white">
                     {{ 'product.new'|trans }}
                 </a>
-            {% endif %}
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <div class="row mt-3">
         <div class="col-12">

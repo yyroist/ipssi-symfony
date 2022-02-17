@@ -22,6 +22,13 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    /**
+     * Création d'un nouveau produit.
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route('/new', name: 'produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -33,6 +40,7 @@ class ProduitController extends AbstractController
             $entityManager->persist($produit);
             $entityManager->flush();
 
+            $this->addFlash('success', 'product.added');
             return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
