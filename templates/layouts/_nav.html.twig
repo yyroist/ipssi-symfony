@@ -1,6 +1,6 @@
 {# Menu de navigation #}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
+    <div class="container">
         <a class="navbar-brand" href="#">Ipssi Symfony - Evaluation</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,14 +13,14 @@
 
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ 'nav.logout'|trans }}</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">{{ 'nav.logout'|trans }}</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ 'nav.login'|trans }}</a>
+                        <a class="nav-link" href="{{ path('app_login') }}">{{ 'nav.login'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ 'nav.logout'|trans }}</a>
+                        <a class="nav-link" href="{{ path('app_register') }}">{{ 'nav.registrer'|trans }}</a>
                     </li>
                 {% endif %}
             </ul>
