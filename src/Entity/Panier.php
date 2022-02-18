@@ -5,7 +5,11 @@ namespace App\Entity;
 use App\Repository\PanierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\NonUniqueResultException;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: PanierRepository::class)]
 class Panier
@@ -13,17 +17,17 @@ class Panier
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'paniers')]
     #[ORM\JoinColumn(nullable: false)]
-    private $utilisateur;
+    private ?User $utilisateur;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private $created_at;
+    private ?\DateTimeImmutable $created_at;
 
     #[ORM\Column(type: 'boolean')]
-    private $etat;
+    private ?bool $etat;
 
     #[ORM\OneToMany(mappedBy: 'panier', targetEntity: ContenuPanier::class)]
     private $contenuPaniers;
@@ -31,6 +35,8 @@ class Panier
     public function __construct()
     {
         $this->contenuPaniers = new ArrayCollection();
+        $this->setEtat(false); // Par défaut un panier est non payé
+        $this->setCreatedAt(new \DateTimeImmutable());
     }
 
     public function getId(): ?int
@@ -43,7 +49,7 @@ class Panier
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?User $utilisateur): self
+    public function setUtilisateur(User|UserInterface $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
 
@@ -102,5 +108,22 @@ class Panier
         }
 
         return $this;
+    }
+
+    /**
+     * Calcul de la valeur totale du panier.
+     *
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        $total = 0;
+        if (!$this->getContenuPaniers()->isEmpty()) {
+            foreach ($this->getContenuPaniers() as $contenuPanier) {
+                $total += $contenuPanier->getProduit()->getPrix() * $contenuPanier->getQuantite();
+            }
+        }
+
+        return $total;
     }
 }

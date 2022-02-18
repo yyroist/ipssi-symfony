@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'cart'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-5">{{ 'cart'|trans }}</h1>
+
+            {% if panier.contenuPaniers|length %}
+                {% set total = 0 %}
+                {% for p in panier.contenuPaniers %}
+                    {% set subtotal = p.produit.prix * p.quantite %}
+                    {% set total = total + subtotal %}
+                    <div class="row bg-white py-3 border-bottom">
+                        <div class="col-2">
+                            <img src="{{ p.produit.photo }}" class="img-thumbnail" alt="{{ p.produit.nom }}">
+                        </div>
+                        <div class="col-8">
+                            <h5>{{ p.produit.nom }}</h5>
+                            <p>
+                                {{ 'quantity'|trans }} : {{ p.quantite }} <br>
+                                {{ 'price'|trans }} : {{ p.produit.prix }} € <br><br>
+                                {{ 'subtotal'|trans }} : {{ subtotal }} €
+                            </p>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-danger">
+                                {{ 'card.remove'|trans }}
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <div class="alert alert-primary">
+                            <span>
+                                {{ 'total'|trans }} : {{ total }} €
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <a class="btn btn-warning text-white w-100">
+                            {{ 'pay'|trans }}
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-info">{{ 'cart.empty'|trans }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

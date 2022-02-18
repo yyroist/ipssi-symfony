@@ -1,0 +1,44 @@
+<div class="row mt-3">
+    <div class="col-12">
+        <h2 class="mb-3">{{ 'admin.panier_non_paid'|trans }}</h2>
+
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr>
+                    <th>{{ 'user'|trans }}</th>
+                    <th>{{ 'cart.amount'|trans }}</th>
+                    <th>{{ 'cart.content'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in paniers %}
+                    <tr>
+                        <td>{{ p.utilisateur }}</td>
+                        <td>{{ p.amount }} €</td>
+                        <td>
+                            {% if p.contenuPaniers|length %}
+                                <ul class="list-group">
+                                    {% for row in p.contenuPaniers %}
+                                        <li class="list-group-item">
+                                            {{ row.produit.nom }} ({{ 'quantity_short'|trans }} : {{ row.quantite }})
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <div class="alert alert-secondary alert-sm">{{ 'cart.empty'|trans }}</div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">
+                            <div class="alert alert-info">
+                                {{ 'admin.no_empty_cart'|trans }}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'nav.admin'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">{{ 'nav.admin'|trans }}</h1>
+
+            {# Navigation administrateur #}
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="admin-panier-tab" data-bs-toggle="tab" data-bs-target="#admin-panier" type="button" role="tab" aria-controls="admin-panier" aria-selected="true">
+                        {{ 'admin.panier_non_paid'|trans }}
+                    </button>
+                    <button class="nav-link" id="admin-user-tab" data-bs-toggle="tab" data-bs-target="#admin-user" type="button" role="tab" aria-controls="admin-user" aria-selected="false">
+                        {{ 'admin.users_today'|trans }}
+                    </button>
+                </div>
+            </nav>
+            <div class="tab-content px-3" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="admin-panier" role="tabpanel" aria-labelledby="admin-panier-tab">
+                    {% include 'admin/_panier_non_paid.html.twig' %}
+                </div>
+                <div class="tab-pane fade" id="admin-user" role="tabpanel" aria-labelledby="admin-user-tab">
+                    {% include 'admin/_users_today.html.twig' %}
+                </div>
+            </div>
+    </div>
+{% endblock %}
