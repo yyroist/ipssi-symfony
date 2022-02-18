@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\ContenuPanier;
+use App\Entity\Panier;
 use App\Entity\Produit;
+use App\Form\ContenuPanierType;
 use App\Form\ProduitType;
+use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -52,12 +56,44 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'produit_show', methods: ['GET'])]
-    public function show(Produit $produit): Response
+    #[Route('/{id}', name: 'produit_show', methods: ['GET', 'POST'])]
+    public function show(Produit $produit, Request $request, EntityManagerInterface $entityManager, PanierRepository $repository): Response
     {
+
+        $contenu_panier = new ContenuPanier();
+        $form = $this->createForm(ContenuPanierType::class, $contenu_panier);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+
+            // Récupération du dernier panier non payé de l'utilisateur
+            $panier = $repository->findLastNonPaid($this->getUser());
+
+            // Création du panier si non trouvé
+            if (is_null($panier)) {
+                $panier = new Panier();
+                $panier->setUtilisateur($this->getUser()); // L'attribue automatiquement à la personne connectée
+
+                // Sauvegarde en base de données
+                $entityManager->persist($panier);
+                $entityManager->flush();
+            }
+
+            $contenu_panier->setPanier($panier);
+            $contenu_panier->setProduit($produit);
+            $entityManager->persist($contenu_panier);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'cart.product_added');
+            return $this->redirectToRoute('panier_current', [], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'addtocart' => $form->createView()
         ]);
+
+
     }
 
     /**
