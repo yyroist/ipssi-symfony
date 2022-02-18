@@ -83,4 +83,12 @@ class ContenuPanier
 
         return $this;
     }
+
+    /**
+     * @return float Montant de la ligne.
+     */
+    public function getAmount(): float
+    {
+        return $this->quantite * $this->produit->getPrix();
+    }
 }

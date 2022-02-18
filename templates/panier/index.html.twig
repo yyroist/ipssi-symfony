@@ -10,8 +10,7 @@
             {% if panier.contenuPaniers|length %}
                 {% set total = 0 %}
                 {% for p in panier.contenuPaniers %}
-                    {% set subtotal = p.produit.prix * p.quantite %}
-                    {% set total = total + subtotal %}
+                    {% set total = total + p.amount %}
                     <div class="row bg-white py-3 border-bottom">
                         <div class="col-2">
                             <img src="{{ p.produit.photo }}" class="img-thumbnail" alt="{{ p.produit.nom }}">
@@ -21,7 +20,7 @@
                             <p>
                                 {{ 'quantity'|trans }} : {{ p.quantite }} <br>
                                 {{ 'price'|trans }} : {{ p.produit.prix|number_format(2, '.', ' ') }} € <br><br>
-                                {{ 'subtotal'|trans }} : {{ subtotal|number_format(2, '.', ' ') }} €
+                                {{ 'subtotal'|trans }} : {{ p.amount|number_format(2, '.', ' ') }} €
                             </p>
                         </div>
                         <div class="col">
