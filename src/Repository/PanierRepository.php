@@ -25,7 +25,7 @@ class PanierRepository extends ServiceEntityRepository
     }
 
     /**
-     * Récupération du dernier panier non payé.
+     * Récupération du dernier panier non payé pour un utilisateur donné.
      *
      * @param User|UserInterface $user
      * @return Panier|null

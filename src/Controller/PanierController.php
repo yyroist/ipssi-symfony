@@ -30,6 +30,8 @@ class PanierController extends AbstractController
     {
         // Récupération du dernier panier non payé de l'utilisateur
         $panier = $repository->findLastNonPaid($this->getUser());
+
+        // Création du panier si non trouvé
         if (is_null($panier)) {
             $panier = new Panier();
             $panier->setUtilisateur($this->getUser()); // L'attribue automatiquement à la personne connectée
