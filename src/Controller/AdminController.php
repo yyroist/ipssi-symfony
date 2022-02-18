@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Panier;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +25,7 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/index.html.twig', [
             'paniers' => $em->getRepository(Panier::class)->findNonPaid(), // Récupération de la liste des paniers non validés
-            'users' => [] // todo: Récupération de la liste des utilisateurs inscrits aujourd'hui
+            'users' => $em->getRepository(User::class)->findCreatedToday() // todo: Récupération de la liste des utilisateurs inscrits aujourd'hui
         ]);
     }
 }

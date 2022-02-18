@@ -37,8 +37,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Panier::class, orphanRemoval: true)]
     private $paniers;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private ?\DateTimeImmutable $created_at;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $created_at;
 
     /**
      * Constructeur.
@@ -48,7 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->paniers = new ArrayCollection();
 
         // Renseignement automatique de la date de création de l'utilisateur
-        $this->setCreatedAt(new \DateTimeImmutable());
+        $this->setCreatedAt((new \DateTimeImmutable()));
     }
 
     public function getId(): ?int
