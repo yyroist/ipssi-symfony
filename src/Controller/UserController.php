@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Panier;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -16,21 +17,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * Edition du profil de l'utilisateur.
+     * Chargement du profil de l'utilisateur.
      *
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
     #[Route('/profile', name: 'user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $em->flush();
 
             $this->addFlash('success', 'profile.edited');
             return $this->redirectToRoute('user_edit', [], Response::HTTP_SEE_OTHER);
@@ -39,6 +40,7 @@ class UserController extends AbstractController
         return $this->renderForm('user/profile.html.twig', [
             'user' => $user,
             'userEditForm' => $form,
+            'paniers' => $em->getRepository(Panier::class)->findUserPaid($user)
         ]);
     }
 }

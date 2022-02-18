@@ -58,4 +58,25 @@ class PanierRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * Récupération de la liste des paniers payés pour un utilisateur donné.
+     *
+     * @param User|UserInterface $user
+     * @return Panier[]
+     */
+    public function findUserPaid(User|UserInterface $user): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.etat = :etat')
+            ->andWhere('p.utilisateur = :user')
+            ->setParameters(new ArrayCollection([
+                new Parameter('etat', true),
+                new Parameter('user', $user),
+            ]))
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

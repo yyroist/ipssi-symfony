@@ -4,10 +4,28 @@
 {% block title %}{{ 'nav.profile'|trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="mb-3">{{ 'profile.edit' }}</h1>
+    <h1 class="mb-3">{{ 'nav.profile' }}</h1>
 
-    {{ include('user/_form.html.twig', {
-        'button_label': 'profile.edit'|trans,
-        'form': userEditForm
-    }) }}
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="user-infos-tab" data-bs-toggle="tab" data-bs-target="#user-infos" type="button" role="tab" aria-controls="user-infos" aria-selected="true">
+                {{ 'user.edit_profile'|trans }}
+            </button>
+            <button class="nav-link" id="user-paniers-tab" data-bs-toggle="tab" data-bs-target="#user-paniers" type="button" role="tab" aria-controls="user-paniers" aria-selected="false">
+                {{ 'user.paniers'|trans }}
+            </button>
+        </div>
+    </nav>
+    <div class="tab-content px-3" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="user-infos" role="tabpanel" aria-labelledby="user-infos-tab">
+            <h2 class="my-3">{{ 'user.edit_profile' }}</h2>
+            {{ include('user/_form.html.twig', {
+                'button_label': 'profile.edit'|trans,
+                'form': userEditForm
+            }) }}
+        </div>
+        <div class="tab-pane fade" id="user-paniers" role="tabpanel" aria-labelledby="user-paniers-tab">
+            {% include 'user/_panier_list.html.twig' %}
+        </div>
+    </div>
 {% endblock %}
