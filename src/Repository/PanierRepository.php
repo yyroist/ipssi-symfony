@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Panier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +18,22 @@ class PanierRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Panier::class);
+    }
+
+    /**
+     * Récupération du dernier panier non payé.
+     *
+     * @return Panier|null
+     * @throws NonUniqueResultException
+     */
+    public function findLastNonPaid(): ?Panier
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.etat = :etat')
+            ->setParameter('etat', false)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
     // /**

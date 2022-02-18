@@ -15,16 +15,16 @@ class ContenuPanier
 
     #[ORM\ManyToOne(targetEntity: Produit::class, inversedBy: 'contenuPaniers')]
     #[ORM\JoinColumn(nullable: false)]
-    private $produit;
+    private ?Produit $produit;
 
     #[ORM\ManyToOne(targetEntity: Panier::class, inversedBy: 'contenuPaniers')]
-    private $panier;
+    private ?Panier $panier;
 
     #[ORM\Column(type: 'integer')]
-    private $quantite;
+    private ?int $quantite;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private $date_ajout;
+    private ?\DateTimeImmutable $date_ajout;
 
     public function getId(): ?int
     {

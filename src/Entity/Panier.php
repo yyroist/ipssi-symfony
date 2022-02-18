@@ -13,17 +13,17 @@ class Panier
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'paniers')]
     #[ORM\JoinColumn(nullable: false)]
-    private $utilisateur;
+    private ?User $utilisateur;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private $created_at;
+    private ?\DateTimeImmutable $created_at;
 
     #[ORM\Column(type: 'boolean')]
-    private $etat;
+    private ?bool $etat;
 
     #[ORM\OneToMany(mappedBy: 'panier', targetEntity: ContenuPanier::class)]
     private $contenuPaniers;
@@ -31,6 +31,8 @@ class Panier
     public function __construct()
     {
         $this->contenuPaniers = new ArrayCollection();
+        $this->setEtat(false); // Par défaut un panier est non payé
+        $this->setCreatedAt(new \DateTimeImmutable());
     }
 
     public function getId(): ?int
