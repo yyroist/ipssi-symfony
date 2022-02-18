@@ -15,6 +15,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('panier_current') }}">{{ 'nav.cart'|trans }}</a>
                     </li>
+
+                    {# Accès Super Administrateur #}
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin_index') }}">{{ 'nav.admin'|trans }}</a>
+                        </li>
+                    {% endif %}
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('user_edit') }}">{{ 'nav.profile'|trans }}</a>
                     </li>
