@@ -20,8 +20,8 @@
                             <h5>{{ p.produit.nom }}</h5>
                             <p>
                                 {{ 'quantity'|trans }} : {{ p.quantite }} <br>
-                                {{ 'price'|trans }} : {{ p.produit.prix }} € <br><br>
-                                {{ 'subtotal'|trans }} : {{ subtotal }} €
+                                {{ 'price'|trans }} : {{ p.produit.prix|number_format(2, '.', ' ') }} € <br><br>
+                                {{ 'subtotal'|trans }} : {{ subtotal|number_format(2, '.', ' ') }} €
                             </p>
                         </div>
                         <div class="col">
@@ -36,7 +36,7 @@
                     <div class="col-12 text-center">
                         <div class="alert alert-primary">
                             <span>
-                                {{ 'total'|trans }} : {{ total }} €
+                                {{ 'total'|trans }} : {{ total|number_format(2, '.', ' ') }} €
                             </span>
                         </div>
                     </div>
