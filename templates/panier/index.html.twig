@@ -5,7 +5,7 @@
 {% block body %}
     <div class="row">
         <div class="col-12">
-            <h1 class="mb-5">{{ 'cart'|trans }}</h1>
+            <h1 class="mb-3">{{ 'cart'|trans }}</h1>
 
             {% if panier.contenuPaniers|length %}
                 {% set total = 0 %}
@@ -42,9 +42,9 @@
 
                 <div class="row mt-2">
                     <div class="col-12">
-                        <a class="btn btn-warning text-white w-100">
-                            {{ 'pay'|trans }}
-                        </a>
+                        <form method="post" action="{{ path('panier_pay', {'id': panier.id}) }}">
+                            <button class="btn btn-warning text-white w-100">{{ 'cart.pay'|trans }}</button>
+                        </form>
                     </div>
                 </div>
             {% else %}

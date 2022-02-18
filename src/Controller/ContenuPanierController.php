@@ -68,14 +68,24 @@ class ContenuPanierController extends AbstractController
         ]);
     }
 
+    /**
+     * Suppression d'un élément du panier en cours.
+     *
+     * @param Request $request
+     * @param ContenuPanier $contenuPanier
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route('/{id}', name: 'contenu_panier_delete', methods: ['POST'])]
     public function delete(Request $request, ContenuPanier $contenuPanier, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contenuPanier->getId(), $request->request->get('_token'))) {
             $entityManager->remove($contenuPanier);
             $entityManager->flush();
+
+            $this->addFlash('success', 'cart.item_deleted');
         }
 
-        return $this->redirectToRoute('contenu_panier_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('panier_current', [], Response::HTTP_SEE_OTHER);
     }
 }

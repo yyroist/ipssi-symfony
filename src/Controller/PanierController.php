@@ -44,6 +44,37 @@ class PanierController extends AbstractController
     }
 
     /**
+     * Paiement du panier de l'utilisateur.
+     *
+     * @param Panier $panier
+     * @param PanierRepository $repository
+     * @param EntityManagerInterface $em
+     * @return Response
+     * @throws NonUniqueResultException
+     */
+    #[Route('/panier/{id}/paiement', name: 'panier_pay', methods: ['POST'])]
+    public function pay(Panier $panier, PanierRepository $repository, EntityManagerInterface $em): Response
+    {
+        // Vérification que le panier en paramètre corresponde bien
+        // au panier non payé en cours de l'utilisateur connecté
+        $panierToPay = $repository->findLastNonPaid($this->getUser());
+        if ($panierToPay->getId() !== $panier->getId()) {
+            $this->addFlash('danger', 'cart.invalid');
+        } else {
+
+            // Passage du panier à l'état "payé"
+            $panier->setEtat(true);
+            $em->persist($panier);
+            $em->flush();
+
+            $this->addFlash('success', 'cart.paid');
+        }
+
+        // Redirection vers le panier
+        return $this->redirectToRoute('panier_current');
+    }
+
+    /**
      * Affichage du contenu d'une commande.
      *
      * @param Panier $panier
