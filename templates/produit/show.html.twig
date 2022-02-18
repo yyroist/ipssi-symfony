@@ -21,7 +21,9 @@
         <h2 class="featurette-heading">{{ produit.nom }} <span class="text-muted">| {{ produit.prix }}€</span></h2>
         <p class="lead">{{ produit.description }}</p>
         <div class="">
-            <button href="" type="button" class="btn btn-primary">Ajouter au panier</button>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {{ include('contenu_panier/_form.html.twig') }}
+            {% endif %}
         </div>
     </div>
     <div class="col-md-5 order-md-1">
