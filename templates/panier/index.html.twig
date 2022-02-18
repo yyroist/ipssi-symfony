@@ -8,7 +8,10 @@
             <h1 class="mb-5">{{ 'cart'|trans }}</h1>
 
             {% if panier.contenuPaniers|length %}
+                {% set total = 0 %}
                 {% for p in panier.contenuPaniers %}
+                    {% set subtotal = p.produit.prix * p.quantite %}
+                    {% set total = total + subtotal %}
                     <div class="row bg-white py-3 border-bottom">
                         <div class="col-2">
                             <img src="{{ p.produit.photo }}" class="img-thumbnail" alt="{{ p.produit.nom }}">
@@ -18,7 +21,7 @@
                             <p>
                                 {{ 'quantity'|trans }} : {{ p.quantite }} <br>
                                 {{ 'price'|trans }} : {{ p.produit.prix }} € <br><br>
-                                {{ 'subtotal'|trans }} : {{ p.produit.prix * p.quantite }} €
+                                {{ 'subtotal'|trans }} : {{ subtotal }} €
                             </p>
                         </div>
                         <div class="col">
@@ -30,6 +33,16 @@
                 {% endfor %}
 
                 <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <div class="alert alert-primary">
+                            <span>
+                                {{ 'total'|trans }} : {{ total }} €
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
                     <div class="col-12">
                         <a class="btn btn-warning text-white w-100">
                             {{ 'pay'|trans }}
