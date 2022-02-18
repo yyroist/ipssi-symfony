@@ -4,28 +4,30 @@
 
         <table class="table table-sm table-hover">
             <thead>
-            <tr>
-                <th>{{ 'nom'|trans }}</th>
-                <th>{{ 'prenom'|trans }}</th>
-                <th>{{ 'email'|trans }}</th>
-            </tr>
+                <tr>
+                    <th>{{ 'nom'|trans }}</th>
+                    <th>{{ 'prenom'|trans }}</th>
+                    <th>{{ 'email'|trans }}</th>
+                    <th>{{ 'user.created'|trans }}</th>
+                </tr>
             </thead>
             <tbody>
-            {% for u in users %}
-                <tr>
-                    <td>{{ u.nom|upper }}</td>
-                    <td>{{ u.prenom }}</td>
-                    <td>{{ u.email }}</td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">
-                        <div class="alert alert-info">
-                            {{ 'admin.no_users_today'|trans }}
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
+                {% for u in users %}
+                    <tr>
+                        <td>{{ u.nom|upper }}</td>
+                        <td>{{ u.prenom }}</td>
+                        <td>{{ u.email }}</td>
+                        <td>{{ u.createdAt|date('H:i:s') }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">
+                            <div class="alert alert-info">
+                                {{ 'admin.no_users_today'|trans }}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

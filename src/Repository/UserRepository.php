@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -42,8 +44,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findCreatedToday(): array
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.created_at = :today')
-            ->setParameter('today', (new \DateTime())->format('Y-m-d'))
+            ->andWhere('u.created_at >= :todayStart')
+            ->andWhere('u.created_at <= :todayEnd')
+            ->setParameters(new ArrayCollection([
+                new Parameter('todayStart', (new \DateTimeImmutable())->format('Y-m-d 00:00:00')),
+                new Parameter('todayEnd', (new \DateTimeImmutable())->format('Y-m-d 23:59:59'))
+            ]))
             ->orderBy('u.id', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
