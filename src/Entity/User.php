@@ -186,4 +186,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * Conversion de l'utilisateur en chaîne de caractères.
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->prenom . ' ' . strtoupper($this->nom);
+    }
 }

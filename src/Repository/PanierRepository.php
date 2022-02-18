@@ -45,32 +45,17 @@ class PanierRepository extends ServiceEntityRepository
         ;
     }
 
-    // /**
-    //  * @return Panier[] Returns an array of Panier objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Panier[] Récupération de la liste des paniers non payés.
+     */
+    public function findNonPaid(): array
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('p.etat = :etat')
+            ->setParameter('etat', false)
+            ->orderBy('p.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Panier
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -109,4 +109,21 @@ class Panier
 
         return $this;
     }
+
+    /**
+     * Calcul de la valeur totale du panier.
+     *
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        $total = 0;
+        if (!$this->getContenuPaniers()->isEmpty()) {
+            foreach ($this->getContenuPaniers() as $contenuPanier) {
+                $total += $contenuPanier->getProduit()->getPrix() * $contenuPanier->getQuantite();
+            }
+        }
+
+        return $total;
+    }
 }
