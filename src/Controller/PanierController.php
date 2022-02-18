@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/panier')]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class PanierController extends AbstractController
 {
     /**
@@ -25,7 +26,6 @@ class PanierController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route('/', name: 'panier_current', methods: ['GET'])]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function index(PanierRepository $repository, EntityManagerInterface $em): Response
     {
         // Récupération du dernier panier non payé de l'utilisateur
