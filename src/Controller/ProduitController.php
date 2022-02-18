@@ -41,7 +41,7 @@ class ProduitController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'product.added');
-            return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('produit/new.html.twig', [
