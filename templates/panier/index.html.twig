@@ -25,9 +25,7 @@
                             </p>
                         </div>
                         <div class="col">
-                            <button class="btn btn-danger">
-                                {{ 'card.remove'|trans }}
-                            </button>
+                            {{ include('contenu_panier/_delete_form.html.twig', {'contenu_panier': p}) }}
                         </div>
                     </div>
                 {% endfor %}
