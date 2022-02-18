@@ -8,6 +8,7 @@
                     <th>{{ 'cart.id'|trans }}</th>
                     <th>{{ 'cart.amount'|trans }}</th>
                     <th>{{ 'cart.date'|trans }}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -16,6 +17,11 @@
                         <td>{{ p.id }}</td>
                         <td>{{ p.amount }} €</td>
                         <td>{{ p.createdAt|date('d/m/Y H:i') }}</td>
+                        <td>
+                            <a href="{{ path('panier_show', {'id': p.id}) }}" class="btn btn-sm btn-primary">
+                                {{ 'cart.see'|trans }}
+                            </a>
+                        </td>
                     </tr>
                 {% else %}
                     <tr>
