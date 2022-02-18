@@ -10,6 +10,7 @@ use App\Form\ProduitType;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,16 +57,24 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    /**
+     * Chargement d'une fiche produit.
+     *
+     * @param Produit $produit
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param PanierRepository $repository
+     * @return Response
+     * @throws NonUniqueResultException
+     */
     #[Route('/{id}', name: 'produit_show', methods: ['GET', 'POST'])]
     public function show(Produit $produit, Request $request, EntityManagerInterface $entityManager, PanierRepository $repository): Response
     {
-
         $contenu_panier = new ContenuPanier();
         $form = $this->createForm(ContenuPanierType::class, $contenu_panier);
-
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
 
+        if ($form->isSubmitted() && $form->isValid()) {
             // Récupération du dernier panier non payé de l'utilisateur
             $panier = $repository->findLastNonPaid($this->getUser());
 
@@ -81,6 +90,7 @@ class ProduitController extends AbstractController
 
             $contenu_panier->setPanier($panier);
             $contenu_panier->setProduit($produit);
+
             $entityManager->persist($contenu_panier);
             $entityManager->flush();
 
