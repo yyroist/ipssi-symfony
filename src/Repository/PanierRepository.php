@@ -3,9 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\Panier;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Panier|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,14 +27,19 @@ class PanierRepository extends ServiceEntityRepository
     /**
      * Récupération du dernier panier non payé.
      *
+     * @param User|UserInterface $user
      * @return Panier|null
      * @throws NonUniqueResultException
      */
-    public function findLastNonPaid(): ?Panier
+    public function findLastNonPaid(User|UserInterface $user): ?Panier
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.etat = :etat')
-            ->setParameter('etat', false)
+            ->andWhere('p.utilisateur = :user')
+            ->setParameters(new ArrayCollection([
+                new Parameter('etat', false),
+                new Parameter('user', $user)
+            ]))
             ->getQuery()
             ->getOneOrNullResult()
         ;

@@ -5,7 +5,11 @@ namespace App\Entity;
 use App\Repository\PanierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\NonUniqueResultException;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: PanierRepository::class)]
 class Panier
@@ -45,7 +49,7 @@ class Panier
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?User $utilisateur): self
+    public function setUtilisateur(User|UserInterface $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
 

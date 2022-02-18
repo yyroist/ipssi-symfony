@@ -26,6 +26,11 @@ class ContenuPanier
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $date_ajout;
 
+    public function __construct()
+    {
+        $this->setDateAjout(new \DateTimeImmutable());
+    }
+
     public function getId(): ?int
     {
         return $this->id;

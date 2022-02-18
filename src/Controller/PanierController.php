@@ -29,12 +29,10 @@ class PanierController extends AbstractController
     public function index(PanierRepository $repository, EntityManagerInterface $em): Response
     {
         // Récupération du dernier panier non payé de l'utilisateur
-        $panier = $repository->findLastNonPaid();
-
-        // Création d'un nouveau panier s'il n'existe pas de panier non payé
+        $panier = $repository->findLastNonPaid($this->getUser());
         if (is_null($panier)) {
             $panier = new Panier();
-            $panier->setUtilisateur($this->getUser()); // L'attribue automatiquement à la personne connecté
+            $panier->setUtilisateur($this->getUser()); // L'attribue automatiquement à la personne connectée
 
             // Sauvegarde en base de données
             $em->persist($panier);
