@@ -1,38 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit{% endblock %}
+{% block title %}{{ produit.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Produit</h1>
-    &nbsp;
-    {% if is_granted('ROLE_ADMIN') %}
-        <div class="col-12 d-flex gap-2 justify-content-end">
-            <button type="button" class="btn btn-primary" {{ include('produit/_delete_form.html.twig') }}></button>
+    <div class="row">
+        <div class="col-4">
+            <img src="{{ produit.photo }}" alt="{{ produit.nom }}" class="img-fluid">
         </div>
-        &nbsp;
-        <div class="row">
-            <div class="col-12 d-flex gap-2 justify-content-end">
-                <button type="button" class="btn btn-primary"> <a href="{{ path('produit_edit', {'id': produit.id}) }}">Editer</a></button>
+        <div class="col">
+            <div class="row">
+                <div class="col-8">
+                    <h1>{{ produit.nom }}</h1>
+
+                    <span class="text-muted">{{ produit.prix|number_format(2, '.', ' ') }} €</span>
+                    {% if produit.stock > 0 %}
+                        <span> - {{ 'quantity_short'|trans }} : {{ produit.stock }} {{ 'produit.stock' }}</span>
+                    {% else %}
+                        <span class="text-danger"> - {{ 'quantity_empty'|trans }}</span>
+                    {% endif %}
+
+                    <p class="mt-2">{{ produit.description }}</p>
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {{ include('contenu_panier/_form.html.twig') }}
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col d-flex gap-2 justify-content-end">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('produit_edit', {'id': produit.id}) }}" class="btn btn-primary">{{ 'produit.edit'|trans }}</a>
+                                {{ include('produit/_delete_form.html.twig') }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    {% endif %}
-    <div class="row featurette">
-    <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading">{{ produit.nom }} <span class="text-muted">| {{ produit.prix }}€</span></h2>
-        <p class="lead">{{ produit.description }}</p>
-        <div class="">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {{ include('contenu_panier/_form.html.twig') }}
-            {% endif %}
-        </div>
     </div>
-    <div class="col-md-5 order-md-1">
-        <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 500px; height: 500px;" src="{{ produit.photo }}" data-holder-rendered="true">
-    </div>
-</div>
-    &nbsp;
-<div>
-    <button type="button" class="btn btn-primary" href="{{ path('produit_index') }}">Retour arriére</button>
-</div>
-
 {% endblock %}

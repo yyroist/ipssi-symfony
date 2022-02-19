@@ -100,7 +100,7 @@ class ProduitController extends AbstractController
 
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
-            'addtocart' => $form->createView()
+            'addToCart' => $form->createView()
         ]);
 
 
