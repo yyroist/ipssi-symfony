@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,6 +45,26 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Gestion de la photo du produit
+            /** @var UploadedFile $brochureFile */
+            $photo = $form->get('photo')->getData();
+            if ($photo) {
+                // Initialisation du nom du fichier à enregistrer
+                $filename = uniqid(). '-' . time() . '.' . $photo->guessExtension();
+
+                // Création du répertoire si non existant
+                if (!is_dir($this->getParameter('produit_photo_directory'))) {
+                    mkdir($this->getParameter('produit_photo_directory'), 0777, true);
+                }
+
+                // Copie du ficiher
+                $photo->move(
+                    $this->getParameter('produit_photo_directory'),
+                    $filename
+                );
+                $produit->setPhoto($filename);
+            }
+
             $entityManager->persist($produit);
             $entityManager->flush();
 
@@ -97,7 +118,7 @@ class ProduitController extends AbstractController
             $contenu_panier->setPanier($panier); // Affecte le produit ajouté au panier en cours non payé de l'utilisateur
             $contenu_panier->setProduit($produit); // Attribue le produit en cours automatiquement
 
-            // Enregistrement des modificationssy
+            // Enregistrement des modifications
             $entityManager->persist($contenu_panier);
             $entityManager->flush();
 
@@ -148,15 +169,19 @@ class ProduitController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    #[Route('/{id}', name: 'produit_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'produit_delete', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $entityManager->remove($produit);
             $entityManager->flush();
+
+            $this->addFlash('success', 'produit.deleted');
+        } else {
+            $this->addFlash('danger', 'produit_delete_error');
         }
 
-        return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
     }
 }

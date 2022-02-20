@@ -21,7 +21,7 @@
                 {% for p in products %}
                     <div class="col mb-3">
                         <div class="card shadow rounded">
-                            <img src="{{ p.photo }}" class="card-img-top" alt="{{ p.nom }}">
+                            <img src="{{ asset('images/produit/' ~ p.photo) }}" class="card-img-top img-thumbnail" alt="{{ p.nom }}">
                             <div class="card-body px-3">
                                 <h5 class="card-title">
                                     {{ p.nom }}

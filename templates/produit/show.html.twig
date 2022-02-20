@@ -5,7 +5,7 @@
 {% block body %}
     <div class="row">
         <div class="col-4">
-            <img src="{{ produit.photo }}" alt="{{ produit.nom }}" class="img-fluid">
+            <img src="{{ asset('images/produit/' ~ produit.photo) }}" alt="{{ produit.nom }}" class="img-fluid">
         </div>
         <div class="col">
             <div class="row">
