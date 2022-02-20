@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContenuPanierRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContenuPanierRepository::class)]
 class ContenuPanier

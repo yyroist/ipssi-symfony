@@ -88,9 +88,16 @@ class ProduitController extends AbstractController
                 $entityManager->flush();
             }
 
-            $contenu_panier->setPanier($panier);
-            $contenu_panier->setProduit($produit);
+            // Vérification du stock : s'assurer que la quantité demandée soit inférieure ou égale au stock
+            if ($contenu_panier->getQuantite() > $produit->getStock()) {
+                $this->addFlash('danger', 'produit.stock_not_enough');
+                return $this->redirectToRoute('produit_show', ['id' => $produit->getId()]);
+            }
 
+            $contenu_panier->setPanier($panier); // Affecte le produit ajouté au panier en cours non payé de l'utilisateur
+            $contenu_panier->setProduit($produit); // Attribue le produit en cours automatiquement
+
+            // Enregistrement des modificationssy
             $entityManager->persist($contenu_panier);
             $entityManager->flush();
 
