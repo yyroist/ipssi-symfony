@@ -61,12 +61,19 @@ class PanierController extends AbstractController
         if ($panierToPay->getId() !== $panier->getId()) {
             $this->addFlash('danger', 'cart.invalid');
         } else {
-
             // Passage du panier à l'état "payé"
             $panier->setEtat(true);
             $em->persist($panier);
-            $em->flush();
 
+            // Mise à jour du stock de chaque produit du panier
+            foreach ($panier->getContenuPaniers() as $row) {
+                $produit = $row->getProduit();
+                $produit->setStock($produit->getStock() - $row->getQuantite());
+                $em->persist($produit);
+            }
+
+            // Mise à jour en base de données
+            $em->flush();
             $this->addFlash('success', 'cart.paid');
         }
 
