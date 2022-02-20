@@ -21,7 +21,7 @@
 
                     <p class="mt-2">{{ produit.description }}</p>
 
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY' and produit.stock > 0) %}
                         {{ include('contenu_panier/_form.html.twig') }}
                     {% endif %}
                 </div>
