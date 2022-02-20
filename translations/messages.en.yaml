@@ -1,0 +1,67 @@
+nav:
+  home: Home
+  cart: Cart
+  admin: Administration
+  profile: My account
+  logout: Logout
+
+product:
+  new: Add new product
+  show: View product
+  added: Product created
+  id: Order number
+  name: Product name
+  quantity: Quantity
+  price: Price
+  subtotal: Subtotal
+
+produit:
+  add_to_cart: Add to cart
+  stock: In stock
+  edit: Edit
+  delete: Delete
+
+cart:
+  product_added: Product added to cart
+  remove: Remove
+  pay: Pay
+  paid: Successfully paid
+  empty: Empty cart
+  amount: Cart value
+  content: Order's items
+  content_resume: Order's n°%id% items from %date%
+  date: Order date
+  see: Order details
+
+admin:
+  panier_non_paid: Unpaid carts
+  users_today: Users registered today
+
+user.created: Hour registration
+user.edit_profile: Edit my profile
+user.panier_historic: Historic of orders
+user.commande: Order details
+
+profile:
+  edit: Save
+
+back:
+  index: Back to home
+  profile: Back to profile
+
+quantity_short: Qty
+quantity_empty: Out of stock
+save: Save
+Nom: Name
+Description: Description
+Prix: Price
+Stock: Stock
+Photo: Photo
+quantity: Quantity
+price: Price
+subtotal: Subtotal
+total: Total
+user: User
+nom: Last name
+prenom: First name
+email: Email
