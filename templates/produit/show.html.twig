@@ -14,7 +14,7 @@
 
                     <span class="text-muted">{{ produit.prix|number_format(2, '.', ' ') }} €</span>
                     {% if produit.stock > 0 %}
-                        <span> - {{ 'quantity_short'|trans }} : {{ produit.stock }} {{ 'produit.stock' }}</span>
+                        <span> - {{ 'quantity_short'|trans }} : {{ produit.stock }} {{ 'produit.stock'|trans }}</span>
                     {% else %}
                         <span class="text-danger"> - {{ 'quantity_empty'|trans }}</span>
                     {% endif %}

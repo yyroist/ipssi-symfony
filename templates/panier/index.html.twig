@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'cart'|trans }}{% endblock %}
+{% block title %}{{ 'nav.cart'|trans }}{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-12">
-            <h1 class="mb-3">{{ 'cart'|trans }}</h1>
+            <h1 class="mb-3">{{ 'nav.cart'|trans }}</h1>
 
             {% if panier.contenuPaniers|length %}
                 {% set total = 0 %}

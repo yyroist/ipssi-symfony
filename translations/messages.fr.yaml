@@ -1,0 +1,67 @@
+nav:
+  home: Accueil
+  cart: Panier
+  admin: Administration
+  profile: Mon compte
+  logout: Déconnexion
+
+product:
+  new: Ajouter un produit
+  show: Voir produit
+  added: Produit créé
+  id: Numéro de commande
+  name: Nom du produit
+  quantity: Quantité
+  price: Prix du produit
+  subtotal: Sous-total
+
+produit:
+  add_to_cart: Ajouter au panier
+  stock: En stock
+  edit: Modifier
+  delete: Supprimer
+
+cart:
+  product_added: Produit ajouté au panier
+  remove: Supprimer du panier
+  pay: Payer le panier
+  paid: Payé panier avec succès
+  empty: Panier vide
+  amount: Montant du panier
+  content: Contenu de la commande
+  content_resume: Contenu de la commmande n°%id% du %date%
+  date: Date de la commande
+  see: Détails commande
+
+admin:
+  panier_non_paid: Paniers non payés
+  users_today: Utilisateurs inscrits aujourd'hui
+
+user.created: Heure d'inscription utilisateur
+user.edit_profile: Modifier mes informations
+user.panier_historic: Historique des commandes
+user.commande: Récapitulatif de votre commande
+
+profile:
+  edit: Enregistrer mes informations
+
+back:
+  index: Retour à l'accueil
+  profile: Retour au profil
+
+quantity_short: Qté
+quantity_empty: Rupture de stock
+save: Enregistrer
+Nom: Nom
+Description: Description
+Prix: Prix
+Stock: Stock
+Photo: Photo
+quantity: Quantité
+price: Prix
+subtotal: Sous-total
+total: Total
+user: Utilisateur
+nom: Nom
+prenom: Prénom
+email: Email

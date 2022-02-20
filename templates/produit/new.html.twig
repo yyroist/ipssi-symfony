@@ -3,11 +3,11 @@
 {% block title %}{{ 'product.new'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'product.new' }}</h1>
+    <h1>{{ 'product.new'|trans }}</h1>
 
     {{ include('produit/_form.html.twig') }}
 
     <a href="{{ path('index') }}" class="btn btn-sm btn-warning text-white px-3">
-        {{ 'back.index' }}
+        {{ 'back.index'|trans }}
     </a>
 {% endblock %}

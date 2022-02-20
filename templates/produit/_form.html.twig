@@ -1,6 +1,6 @@
 <div class="mt-3">
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button class="btn btn-sm btn-success px-3 mb-2">{{ button_label|default('save') }}</button>
+        <button class="btn btn-sm btn-success px-3 mb-2">{{ button_label|default('save')|trans }}</button>
     {{ form_end(form) }}
 </div>

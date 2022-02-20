@@ -20,7 +20,7 @@ class UserController extends AbstractController
      * Chargement du profil de l'utilisateur.
      *
      * @param Request $request
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface $em
      * @return Response
      */
     #[Route('/profile', name: 'user_edit', methods: ['GET', 'POST'])]

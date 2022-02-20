@@ -1,4 +1,4 @@
 {{ form_start(addToCart) }}
     {{ form_widget(addToCart) }}
-    <button class="btn btn-success">{{ button_label|default('produit.add_to_cart') }}</button>
+    <button class="btn btn-success">{{ button_label|default('produit.add_to_cart')|trans }}</button>
 {{ form_end(addToCart) }}

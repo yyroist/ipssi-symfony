@@ -4,7 +4,7 @@
 {% block title %}{{ 'nav.profile'|trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="mb-3">{{ 'nav.profile' }}</h1>
+    <h1 class="mb-3">{{ 'nav.profile'|trans }}</h1>
 
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -18,7 +18,7 @@
     </nav>
     <div class="tab-content px-3" id="nav-tabContent">
         <div class="tab-pane fade show active" id="user-infos" role="tabpanel" aria-labelledby="user-infos-tab">
-            <h2 class="my-3">{{ 'user.edit_profile' }}</h2>
+            <h2 class="my-3">{{ 'user.edit_profile'|trans }}</h2>
             {{ include('user/_form.html.twig', {
                 'button_label': 'profile.edit'|trans,
                 'form': userEditForm
