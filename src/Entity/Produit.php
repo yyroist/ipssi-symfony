@@ -6,8 +6,12 @@ use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBag;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Produit
 {
     #[ORM\Id]
@@ -131,5 +135,11 @@ class Produit
         }
 
         return $this;
+    }
+
+    #[ORM\PostRemove]
+    public function postRemove(): void
+    {
+        unlink(__DIR__.'/../../public/images/produit/' . $this->photo);
     }
 }
