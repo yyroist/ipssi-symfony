@@ -13,7 +13,7 @@
                     {% set total = total + p.amount %}
                     <div class="row bg-white py-3 border-bottom">
                         <div class="col-2">
-                            <img src="{{ p.produit.photo }}" class="img-thumbnail" alt="{{ p.produit.nom }}">
+                            <img src="{{ asset('images/produit/' ~ p.produit.photo) }}" class="img-thumbnail" alt="{{ p.produit.nom }}">
                         </div>
                         <div class="col-8">
                             <h5>{{ p.produit.nom }}</h5>

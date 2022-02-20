@@ -1,8 +1,1 @@
-- Input file : photo produits
-- Fixtures :
-  - 1 admin
-  - 1 super_admin
-  - 5 utilisateurs
-  - 6 produits
 - Nettoyage code inutile
-- 
